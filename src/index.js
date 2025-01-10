@@ -84,4 +84,19 @@ class HashMap{
         this.buckets = new Array(this.capacity);//reset buckets
         this.size = 0;//reset size of #map
     }
+
+    keys(){
+        let keys = [];
+
+        for (let i = 0; i < this.buckets.length; i++) {
+            const bucket = this.buckets[i];
+        }
+        
+        if (bucket) {
+            for(let j = 0; j < this.buckets.length; j++){
+                key.push(bucket[j].key)
+            }
+        }
+        return keys;//show entire list of keys
+    }
 }
