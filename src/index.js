@@ -99,4 +99,19 @@ class HashMap {
     }
     return keys; //show entire list of keys
   }
+
+  values() {
+    let values = [];
+
+    for (let i = 0; i < this.buckets.length; i++) {
+      const bucket = this.buckets[i];
+
+      if (bucket) {
+        for (let j = 0; j < bucket.length; j++) {
+          values.push(bucket[j].value);
+        }
+      }
+    }
+    return values; //show entire list of values
+  }
 }
