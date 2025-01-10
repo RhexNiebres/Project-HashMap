@@ -1,4 +1,4 @@
-class HashMap {
+export class HashMap {
   constructor(loadfactor, capacity = 16) {
     this.loadfactor = loadfactor;
     this.capacity = capacity;
@@ -15,6 +15,54 @@ class HashMap {
     }
 
     return hashCode;
+  }
+
+  set(key, value) {
+    const index = this.hash(key);
+
+    if (index < 0 || index >= this.buckets.length) {
+      throw new Error("Trying to access index out of bounds");
+    }
+
+    if (!this.buckets[index]) {
+      this.buckets[index] = [];
+    }
+
+    const bucket = this.buckets[index];
+
+    for (let i = 0; i < bucket.length; i++) {
+      if (bucket[i].key === key) {
+        bucket[i].value = value;
+        return;
+      }
+    }
+
+    bucket.push({ key, value });
+    this.size++;
+
+    if(this.size / this.capacity > this.loadfactor){
+      this.resize
+    }
+  }
+
+  resize(){
+    this.capacity *= 2;
+    const newBuckets = new Array(this.capacity);
+
+    for (let i = 0; i < this.buckets.length; i++) {
+      const bucket = this.buckets[i];
+      if (bucket) {
+        for (let j = 0; j < bucket.length; j++) {
+          const { key, value } = bucket[j];
+          const newIndex = this.hash(key);
+          if (!newBuckets[newIndex]) {
+            newBuckets[newIndex] = [];
+          }
+          newBuckets[newIndex].push({ key, value });
+        }
+      }
+    }
+    this.buckets = newBuckets;
   }
 
   get(key) {
@@ -114,4 +162,36 @@ class HashMap {
     }
     return values; //show entire list of values
   }
+
+  entries() {
+    let entries= [];
+
+    for (let i = 0; i < this.buckets.length; i++) {
+      const bucket = this.buckets[i];
+
+      if (bucket) {
+        for (let j = 0; j < bucket.length; j++) {
+            entries.push(bucket[j].key, bucket[j].value);
+        }
+      }
+    }
+    return entries; //show entire list of key and value pair
+  }
 }
+
+const test = new HashMap() 
+
+test.set('apple', 'red')
+test.set('banana', 'yellow')
+test.set('carrot', 'orange')
+test.set('dog', 'brown')
+test.set('elephant', 'gray')
+test.set('frog', 'green')
+test.set('grape', 'purple')
+test.set('hat', 'black')
+test.set('ice cream', 'white')
+test.set('jacket', 'blue')
+test.set('kite', 'pink')
+test.set('lion', 'golden')
+
+console.log('Before Overwriting:');
