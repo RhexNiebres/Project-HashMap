@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  "build": "webpack",
-  "dev": "webpack serve",
-  "deploy": "git subtree push --prefix dist origin gh-pages"
-},
+    "build": "webpack",
+    "dev": "webpack serve",
+    "deploy": "git subtree push --prefix dist origin gh-pages"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/RhexNiebres/Webpack-Template.git"
