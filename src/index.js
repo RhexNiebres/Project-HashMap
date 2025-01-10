@@ -19,6 +19,11 @@ class HashMap{
  
     get(key){
         const index = this.hash(key);
+
+        if (index < 0 || index >= this.buckets.length) {
+            throw new Error("Trying to access index out of bounds");
+        }
+
         const bucket = this.buckets[index];
 
         if (bucket) {
@@ -33,6 +38,11 @@ class HashMap{
 
     has(key){
         const index = this.hash(key);
+
+        if (index < 0 || index >= this.buckets.length) {
+            throw new Error("Trying to access index out of bounds");
+        }
+
         const bucket = this.buckets[index];
 
         if (bucket) {
@@ -42,7 +52,7 @@ class HashMap{
                 }
             }
         }
-        return false;
+        return false;//if key is not found in buckets
     }
 
     remove(key){
@@ -51,15 +61,27 @@ class HashMap{
         if (index < 0 || index >= this.buckets.length) {
             throw new Error("Trying to access index out of bounds");
         }
+
         const bucket = this.buckets[index];
 
         if (bucket) {
             for (let i = 0; i < bucket.length; i++){
                 if (bucket[i].key === key){
+                    bucket.splice(i, 1);//remove item from bucket
+                    this.size--;
                     return true;
                 }
             }
         }
         return false;
+    }
+
+    length(){
+        return this.size;
+    }
+
+    clear(){
+        this.buckets = new Array(this.capacity);//reset buckets
+        this.size = 0;//reset size of #map
     }
 }
